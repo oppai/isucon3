@@ -1,2 +1,2 @@
 #!/bin/bash
-echo `sudo isucon3 test` >> /tmp/isucon.score
+echo `/usr/local/bin/isucon3 test` >> /tmp/isucon.score
