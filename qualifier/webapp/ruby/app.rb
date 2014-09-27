@@ -62,7 +62,7 @@ class Isucon3App < Sinatra::Base
     end
 
     def gen_markdown(memo_id, md)
-      key = "memo:#{memo_id}"
+      key = memo_id
       html = @@md_cache[key]
       return html if html
       html = @@markdown.render(md)
