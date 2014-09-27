@@ -1,3 +1,4 @@
 #! /bin/bash
-
-git pull origin master
+git stash
+git pull origin `git rev-parse --abbrev-ref HEAD`
+git stash pop
