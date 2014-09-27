@@ -6,6 +6,7 @@ require 'dalli'
 require 'rack/session/dalli'
 require 'erubis'
 require 'tempfile'
+require 'redcarpet'
 
 class Isucon3App < Sinatra::Base
   $stdout.sync = true
@@ -15,6 +16,7 @@ class Isucon3App < Sinatra::Base
   }
 
   @@user_id_cache = Hash.new
+  @@markdown = Redcarpet::Markdown.new(Redcarpet::Render::HTML)
 
   helpers do
     set :erb, :escape_html => true
@@ -59,12 +61,13 @@ class Isucon3App < Sinatra::Base
     end
 
     def gen_markdown(md)
-      tmp = Tempfile.open("isucontemp")
-      tmp.puts(md)
-      tmp.close
-      html = `../bin/markdown #{tmp.path}`
-      tmp.unlink
-      return html
+      #tmp = Tempfile.open("isucontemp")
+      #tmp.puts(md)
+      #tmp.close
+      #html = `../bin/markdown #{tmp.path}`
+      #tmp.unlink
+      #return html
+      return @@markdown.render(md)
     end
 
     def anti_csrf
