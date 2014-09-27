@@ -1,1 +1,1 @@
-*/10  *  *  *  *	/home/isucon/isucon3/cron/pull.sh && /home/isucon/isucon3/cron/bench.sh && /home/isucon/isucon3/cron/slack.sh
+*/5  *  *  *  * cd /home/isucon/isucon3 && /home/isucon/isucon3/cron/crontab.sh
