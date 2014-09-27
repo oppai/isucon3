@@ -17,6 +17,7 @@ class Isucon3App < Sinatra::Base
 
   @@user_id_cache = Hash.new
   @@markdown = Redcarpet::Markdown.new(Redcarpet::Render::HTML)
+  @@md_cache = Hash.new
 
   helpers do
     set :erb, :escape_html => true
@@ -62,10 +63,10 @@ class Isucon3App < Sinatra::Base
 
     def gen_markdown(memo_id, md)
       key = "memo:#{memo_id}"
-      html = session[key]
+      html = @@md_cache[key]
       return html if html
       html = @@markdown.render(md)
-      session[key] = html
+      @@md_cache[key] = html
       html
     end
 
