@@ -61,12 +61,6 @@ class Isucon3App < Sinatra::Base
     end
 
     def gen_markdown(md)
-      #tmp = Tempfile.open("isucontemp")
-      #tmp.puts(md)
-      #tmp.close
-      #html = `../bin/markdown #{tmp.path}`
-      #tmp.unlink
-      #return html
       return @@markdown.render(md)
     end
 
