@@ -17,6 +17,7 @@ class Isucon3App < Sinatra::Base
 
   @@user_id_cache = Hash.new
   @@markdown = Redcarpet::Markdown.new(Redcarpet::Render::HTML)
+  @@md_cache = Hash.new
 
   helpers do
     set :erb, :escape_html => true
@@ -60,14 +61,13 @@ class Isucon3App < Sinatra::Base
       end
     end
 
-    def gen_markdown(md)
-      #tmp = Tempfile.open("isucontemp")
-      #tmp.puts(md)
-      #tmp.close
-      #html = `../bin/markdown #{tmp.path}`
-      #tmp.unlink
-      #return html
-      return @@markdown.render(md)
+    def gen_markdown(memo_id, md)
+      key = memo_id
+      html = @@md_cache[key]
+      return html if html
+      html = @@markdown.render(md)
+      @@md_cache[key] = html
+      html
     end
 
     def anti_csrf
@@ -188,7 +188,7 @@ class Isucon3App < Sinatra::Base
       end
     end
     memo["username"] = get_user_by_id(memo["user"])["username"]
-    memo["content_html"] = gen_markdown(memo["content"])
+    memo["content_html"] = gen_markdown(memo["id"], memo["content"])
     if user["id"] == memo["user"]
       cond = ""
     else
