@@ -14,7 +14,7 @@ class Isucon3App < Sinatra::Base
     :cache => Dalli::Client.new('localhost:11211')
   }
 
-  @user_id_cache = Hash.new
+  @@user_id_cache = Hash.new
 
   helpers do
     set :erb, :escape_html => true
@@ -33,10 +33,11 @@ class Isucon3App < Sinatra::Base
     end
 
     def get_user_by_id user_id
-      user = @user_id_cache[user_id]
+      mysql = connection
+      user = @@user_id_cache[user_id]
       return user if user
       user = mysql.xquery("SELECT * FROM users WHERE id=?", user_id).first
-      @user_id_cache[user_id] = user
+      @@user_id_cache[user_id] = user
       return user
     end
 
@@ -183,7 +184,7 @@ class Isucon3App < Sinatra::Base
         halt 404, "404 Not Found"
       end
     end
-    memo["username"] = get_user_by_id(memo["user"]).first["username"]
+    memo["username"] = get_user_by_id(memo["user"])["username"]
     memo["content_html"] = gen_markdown(memo["content"])
     if user["id"] == memo["user"]
       cond = ""
