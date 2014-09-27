@@ -60,8 +60,13 @@ class Isucon3App < Sinatra::Base
       end
     end
 
-    def gen_markdown(md)
-      return @@markdown.render(md)
+    def gen_markdown(memo_id, md)
+      key = "memo:#{memo_id}"
+      html = session[key]
+      return html if html
+      html = @@markdown.render(md)
+      session[key] = html
+      html
     end
 
     def anti_csrf
@@ -182,7 +187,7 @@ class Isucon3App < Sinatra::Base
       end
     end
     memo["username"] = get_user_by_id(memo["user"])["username"]
-    memo["content_html"] = gen_markdown(memo["content"])
+    memo["content_html"] = gen_markdown(memo["id"], memo["content"])
     if user["id"] == memo["user"]
       cond = ""
     else
