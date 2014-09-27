@@ -1,3 +1,3 @@
 #! /bin/bash
 
-git pull oppai master
+git pull origin master
