@@ -8,5 +8,5 @@ HEAD=`cd /home/isucon/isucon3 && /usr/bin/git rev-parse HEAD`
 TEXT="HEAD-sha:%60$HEAD%60"
 /usr/bin/curl -X POST https://slack.com/api/chat.postMessage -d "channel=#ulix_notify&text=$TEXT&username=ISUCON3-SCORE&token=xoxp-2500638381-2580872673-2623220604-daf2fd"
 
-TEXT="Result:$RESULT%20%20RawScore:$RawScore%20%20Fails:$Fails%20%20Score:$Score%20@channel"
+TEXT="Result:$RESULT%20%20RawScore:$RawScore%20%20Fails:$Fails%20%20Score:$Score%20<!channel>"
 /usr/bin/curl -X POST https://slack.com/api/chat.postMessage -d "channel=#ulix_notify&text=$TEXT&username=ISUCON3-SCORE&token=xoxp-2500638381-2580872673-2623220604-daf2fd"
