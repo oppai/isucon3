@@ -1,1 +1,2 @@
-*/10  *  *  *  *	/home/isucon/isucon3/cron/pull.sh && /home/isucon/isucon3/cron/bench.sh && /home/isucon/isucon3/cron/slack.sh
+# /etc/crontab に書き足す
+*/5 * * * * root /home/isucon/isucon3/cron/crontab.sh 2>/tmp/cron.error.log
